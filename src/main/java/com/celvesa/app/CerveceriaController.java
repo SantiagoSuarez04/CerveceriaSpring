@@ -5,10 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +33,7 @@ public class CerveceriaController {
             if (nombre_cerveceria == null) 
                 cervecerias.addAll(cerveceriaRepository.findAll());
             else 
-                cervecerias.addAll(cerveceriaRepository.findByNombre_cerveceria(nombre_cerveceria));
+                cervecerias.addAll(cerveceriaRepository.findByNombre_cerveceriaContainig(nombre_cerveceria));
                 
             return new ResponseEntity<>(cervecerias, HttpStatus.OK);
             
@@ -84,13 +82,5 @@ public ResponseEntity<Cerveceria> createTutorial(@RequestBody Cerveceria cervece
     }
 }
 
-    @DeleteMapping("/cervecerias/{id}")
-public ResponseEntity<HttpStatus> deleteCerveceria(@PathVariable("id") long id){
-    try {
-        cerveceriaRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    } catch (Exception e) {
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-}
+    
 }
